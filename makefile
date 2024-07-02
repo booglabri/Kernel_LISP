@@ -1,6 +1,6 @@
 OBJS   := $(shell cat link.rsp | tr -s "+\n" " " |sed -e "s/\.obj/.o/g")
-#CFLAGS := -w -fcompare-debug-second
-CFLAGS := -g3
+CFLAGS := -g3 -w -fcompare-debug-second
+#CFLAGS := -g3
 LIB    := -static -lm
 #CC     := arm-linux-gnueabihf-gcc
 STRIP  := echo

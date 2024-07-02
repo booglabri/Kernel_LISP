@@ -331,7 +331,7 @@ extern kerncell catch(), throw(), caperr(),
 		Lreset(), Vexit();
 /* iter.c: */
 extern kernsym  progsym, gosym, returnsym, dosym;
-extern kerncell Uprog(), prog(), progaux(), Ugo(), Vreturn(), Udo();
+extern kerncell Uprog(), prog(), Ugo(), Vreturn(), Udo();
 /* map.c: */
 extern kernsym  mapcarsym, mapasym, mapcdrsym, mapdsym;
 extern kerncell Vmapcar(), Vmapa(), Vmapcdr(), Vmapd();

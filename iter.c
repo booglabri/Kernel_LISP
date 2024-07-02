@@ -3,6 +3,8 @@
  */
 #include "kernel.h"
 
+static kerncell progaux();
+
 kerncell
 Uprog ()  /* ------------------------------- (prog (...vars...) ...body...) */
 {

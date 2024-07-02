@@ -34,7 +34,6 @@ int  argn;
 char *argv[];
 {
    int	    len;
-   char	    *malloc();
    kerncell compile();
 
 	if (argn <= 1) {
