@@ -2,6 +2,9 @@
  * header definitions and macros:
  */
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define UNIX		0
 #define SIGNAL		1
 

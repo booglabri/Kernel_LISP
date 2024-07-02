@@ -165,7 +165,6 @@ stree tree;
 char *str;
 {
    kernsym gensym();
-   char	   *malloc();
    int	   cmp;
 
 	if (tree == NULL) {
@@ -192,7 +191,6 @@ itree tree;
 int   inum;
 {
    kernsym gensym();
-   char	   *malloc();
 
 	if (tree == NULL) {
 	   if ((tree = (struct inode *) malloc(sizeof(struct inode))) == NULL) {
@@ -218,7 +216,6 @@ rtree tree;
 real  rnum;
 {
    kernsym gensym();
-   char	   *malloc();
 
 	if (tree == NULL) {
 	   if ((tree = (struct rnode *) malloc(sizeof(struct rnode))) == NULL) {
