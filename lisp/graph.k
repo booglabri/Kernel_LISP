@@ -10,12 +10,13 @@
 
 (fun search (node item visited)                         ;; find item in graph denoted by node
      (prog (sub-nodes found)
-           (cond [(eq item_node) (return node)]         ;; trivial case
+           (cond [(eq item node) (return node)]         ;; trivial case
                  [(or (null? (setq sub-nodes (eval node)))
                       (memq node visited))              ;; don't search if already visited
                   (return nil)])
       loop
-        (cond [(null? sub-nodes (return nil)]           ;; is not there
+        (cond
+	   [(null? sub-nodes) (return nil)]             ;; is not there
               [(setq found                              ;; search a subgraph
                      (search (node-of sub-nodes) item (cons node visited)))
                (return found)])
@@ -24,9 +25,11 @@
 
 (search 'a 'c nil)
 (search 'a 'm nil)
+(search 'a 'f nil)
+(search 'a 'e nil)
 
 (fun optimize (node bound)
-     (prog [(subnodes (eval mode)) subbound route op-route cost]
+     (prog [(subnodes (eval node)) subbound route op-route cost]
            (and (null? subnodes)                        ;; a leaf has cost 0
                 (return (list 0 node)))
         loop
@@ -44,4 +47,8 @@
            (go loop)))
 
 (optimize 'a 100)
+(optimize 'b 100)
+(optimize 'c 100)
 (optimize 'd 100)
+(optimize 'e 100)
+(optimize 'f 100)

@@ -3,7 +3,12 @@
      	    [t ,(caddr expr)]))			;; else
 
 (fun len (obj)
-        (if (list? obj) (length obj)
-         else 0))
+        (if (list? obj) (length obj) 0))
 
+(setq x 6)
+(len x)
+(binding 'len)
+
+(setq x '(a b c))
+(len x)
 (binding 'len)

@@ -1,4 +1,4 @@
-(def atmos
+(def atoms
      (lam (expr)
           (cond [(null? expr) 0]             ;; empty expression
                 [(atom? expr) 1]             ;; exactly one atom
