@@ -8,6 +8,7 @@
 #define TAB	'\t'
 #define SPACE	' '
 #define ESCAPE  033
+#define MYEOF   (char)EOF
 
 #define LPARENTOK	1	/* ( */
 #define RPARENTOK	2	/* ) */
@@ -57,6 +58,7 @@ int mode;
 	return(chan);
 } /* openchan */
 
+void
 closechan (chan)  /* ---------------------------------------- close channel */
 iochan chan;
 {
@@ -67,6 +69,7 @@ iochan chan;
 	free(chan);
 } /* closechan */
 
+void
 initio ()  /* ------------------------------------- initialize I/O channels */
 {
 	inchan  = mkchan(_inchan  = openchan(stdin,INCHAN));
@@ -99,6 +102,7 @@ register iochan chan;
 	return(chan->ch = chan->buf[chan->pos++]);
 } /* nextch */
 
+int
 nexttok (chan)  /* -------------- fetch and return the next token from chan */
 register iochan chan;
 {
@@ -145,7 +149,7 @@ register iochan chan;
 		return(SYMTOK);
 	     }
 	  case EOL:  return(EOLTOK);		 /* end-of-line is reported */
-	  case EOF:  return(EOFTOK);		 /* end-of-file is reported */
+	  case MYEOF: return(EOFTOK);		 /* end-of-file is reported */
 	  case ESCAPE: nextch(chan);			  /* ignore escapes */
 		       goto start;
 	  default:
@@ -163,6 +167,7 @@ register iochan chan;
 	} /* switch */
 } /* nexttok */
 
+int
 skipeoltok (chan,flag)  /* ------- skip eol token and return the next token */
 register iochan chan;
 int	 flag;
@@ -176,6 +181,7 @@ int	 flag;
 	return(chan->tok);
 } /* skipeoltok */
 
+int
 atomkind (name)  /* ----------- work out whether name is a number or symbol */
 register char *name;
 {
@@ -208,6 +214,7 @@ register char *name;
 	return(SYMTOK);						  /* symbol */
 } /* atomkind */
 
+int
 isnum (name)  /* --------------------------------- is name a number string? */
 register char *name;
 {
@@ -362,6 +369,7 @@ int	 bq;		     /* non-zero when in a back-quoted s-expression */
 	return(obj);
 } /* readaux1 */
 
+int
 hasmacro (expr)  /* -------- returns non-zero when expr contains ',' or '@' */
 register kerncell expr;
 {
@@ -408,6 +416,7 @@ kerncell list;
 			     mkcell(transform(list->CELLcdr),nil))));
 } /* transform */
 
+int
 printaux (flag,expr,chan,max)  /* ------------------------------- auxiliary */
 int	 flag;
 register kerncell expr;
@@ -465,6 +474,7 @@ int	 max;		/* max specifies an upper bound when flag is LENGTH */
 	} /* switch */
 } /* printaux */
 
+int
 bufprint (flag,chan,format,arg)  /* ------------------------ buffered print */
 int    flag;
 iochan chan;
@@ -617,6 +627,7 @@ Vtab ()  /* ----------------------------------------- (tab 'column ['chan]) */
 	return(TTT);
 } /* Vtab */
 
+void
 tab (column,chan)  /* ------------------------------------------------- tab */
 int column;
 iochan chan;
@@ -697,6 +708,7 @@ Vpp ()  /* --------------------------------------------- (pp 'expr ['chan]) */
 	return(TTT);
 } /* Vpp */
 
+void
 pp (expr,chan,lmar,rmar)  /* --------- pretty print expr within the margins */
 register kerncell expr;
 iochan	 chan;
@@ -754,6 +766,7 @@ int	 lmar, rmar;
 	bufprint(PRINT,chan,(flag == LISTOBJ ? ")" : "}"));
 } /* pp */
 
+int
 printlen (expr,chan,rmar)  /* ------------------------------ length of expr */
 kerncell expr;
 iochan	 chan;

@@ -1,6 +1,7 @@
 /* KERNEL, 24/8/87 -- S. Hekmatpour
  * miscelanous functions:
  */
+#include <sys/wait.h>
 #include "kernel.h"
 
 kerncell
@@ -218,6 +219,7 @@ Vload ()  /* -------------------------------------- (load 'name ['verbose]) */
 	return(TTT);
 } /* Vload */
 
+int
 load (name,verbose)  /* ----------------------------------------- auxiliary */
 kerncell name;
 int verbose;
@@ -265,10 +267,12 @@ Ushell () /* --------------------------------------------------- (! [args]) */
 	return(mkinum(subshell(strbuf)));
 } /* Ushell */
 
+int
 subshell (str)  /* -------------------------------------- create a subshell */
 char *str;
 {
-   int	    (* save_intr)(), procid, status;
+  void	    (* save_intr)();
+  int       procid, status;
    register int iwait;
 
 	save_intr = signal(SIGINT,SIG_IGN);		  /* save interrupt */
@@ -282,4 +286,4 @@ char *str;
 	signal(SIGINT,save_intr);		 /* restore saved interrupt */
 	return(iwait == -1 ? -1 : status);
 } /* subshell */
-#endif UNIX
+#endif /* UNIX */

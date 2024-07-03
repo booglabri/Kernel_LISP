@@ -29,6 +29,15 @@ rtree rnumtree = NULL;		/* real tree */
 kernsym lastsym;		/* last symbol */
 char *source, *target;		/* source and target file names */
 
+/* kcomp.c */
+void gensyms(stree, iochan);
+void genstrs(stree, iochan);
+void geninums(itree, iochan);
+void genrnums(rtree, iochan);
+void gencode(kerncell, iochan);
+void gencells(kerncell, iochan);
+
+int
 main (argn,argv)  /* ------------------------------------------------- main */
 int  argn;
 char *argv[];
@@ -243,6 +252,7 @@ gensym ()  /* --------------------------------------- generate a new symbol */
 	return(mksym(strbuf));
 } /* gensym */
 
+void
 gencode (forms,chan)  /* -------------------------- generate code for forms */
 kerncell forms;
 iochan chan;
@@ -255,6 +265,7 @@ iochan chan;
 	}
 } /* gencode */
 
+void
 gencells (form,chan)  /* -------------------------- generate cells for form */
 kerncell form;
 iochan chan;
@@ -270,6 +281,7 @@ iochan chan;
 	   printaux(PRINC,form,chan);
 } /* gencells */
 
+void
 gensyms (tree,chan)  /* ------------------ generate code for making symbols */
 stree tree;
 iochan chan;
@@ -282,6 +294,7 @@ iochan chan;
 	}
 } /* gensyms */
 
+void
 genstrs (tree,chan)  /* ------------------ generate code for making strings */
 stree tree;
 iochan chan;
@@ -294,6 +307,7 @@ iochan chan;
 	}
 } /* genstrs */
 
+void
 geninums (tree,chan)  /* ---------------- generate code for making integers */
 itree tree;
 iochan chan;
@@ -306,6 +320,7 @@ iochan chan;
 	}
 } /* geninums */
 
+void
 genrnums (tree,chan)  /* ------------------- generate code for making reals */
 rtree tree;
 iochan chan;

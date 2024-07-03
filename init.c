@@ -5,13 +5,14 @@
 
 #if SIGNAL
 #include <signal.h>
-_interrupt ()
+void _interrupt ()
 {
 	signal(SIGINT, _interrupt);
 	error(NULL,"interrupted - to exit type (exit)",NULL);
 } /* _interrupt */
 #endif /* SIGNAL */
 
+void
 initialize ()
 {
 	initcelltab();

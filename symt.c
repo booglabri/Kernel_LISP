@@ -6,6 +6,7 @@
 #include "kernel.h"
 kernsym symtab [HASHTABSIZE];	 /* symbol table */
 
+void
 initsymtab ()  /* ----------------------------- initialize the symbol table */
 {
    register int i;

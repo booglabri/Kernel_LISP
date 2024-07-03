@@ -38,7 +38,7 @@ int stacked;			  /* non-zero when args are already stacked */
 {
    kerncell fox;
    kerncell (* fun) ();
-   int	    arg1;
+   long	    arg1;
 
      start:
 	if (ISlist(head)) {			   /* ((...) arg1 ... argn) */
@@ -112,7 +112,8 @@ evallam (lam,args,stacked) /* ------------------ evaluate a lam application */
 register kerncell lam, args;
 int stacked;			  /* non-zero when args are already stacked */
 {
-   int	    arg1, nvars;
+   long	    arg1;
+   int      nvars;
    kerncell obj, vars;
    register kerncell vs;
 
@@ -152,9 +153,9 @@ evalvlam (vlam,args,stacked)  /* -------------- evaluate a vlam application */
 register kerncell vlam, args;
 int stacked;			  /* non-zero when args are already stacked */
 {
-   int arg1;
+   long arg1;
    kerncell obj, vars;
-   int save_argtop = _argtop;			   /* for nested vlam calls */
+   long save_argtop = _argtop;			   /* for nested vlam calls */
 
 	vlam = vlam->CELLcdr;				  /* drop vlam head */
 	if (!ISlist(vars = vlam->CELLcar) || checkvars(vars) != 1)
@@ -242,6 +243,7 @@ int	 stacked;		  /* non-zero when args are already stacked */
 	   return(*(head->CELLvec + index->CELLinum));
 } /* evalvector */
 
+int
 checkvars (vars)  /* ---------- check that elements of vars are all symbols */
 register kerncell vars;		     /* returns the length of the vars list */
 {
@@ -256,6 +258,7 @@ register kerncell vars;		     /* returns the length of the vars list */
 	return(count);
 } /* checkvars */
 
+void
 savevars (vars)  /* ------------------- save the bindings of vars in varstk */
 register kerncell vars;
 {
@@ -270,6 +273,7 @@ register kerncell vars;
 	}
 } /* savevars */
 
+void
 restorevars (vars)  /* ------------------- restore the binding of variables */
 register kerncell vars;
 {

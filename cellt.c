@@ -32,6 +32,7 @@ int size;
 	return(res);
 } /* new */
 
+void
 initcelltab ()  /* ------------------------------ initialize the cell table */
 {
    int	    range = SMALLINTHIGH - SMALLINTLOW;
@@ -139,6 +140,7 @@ collectgarb ()  /* ---------------------------------------- collect garbage */
 	return(freelist);
 } /* collectgarb */
 
+void
 mark (obj)  /* --------------------------------- mark cells that are in use */
 register kerncell obj;
 {
