@@ -16,6 +16,11 @@ kcomp: kcomp.o $(OBJS) kernel.h
 	$(CC) -o $@ $? $(LIB)
 	$(STRIP) $@
 
+chksizes: chksizes.c
+	$(CC) -o $@ $?
+	./$@
+	$(RM) $@
+
 %.o: %.c kernel.h
 	$(CC) -c $< $(CFLAGS) -o $@
 
