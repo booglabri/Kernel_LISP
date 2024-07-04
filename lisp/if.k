@@ -15,3 +15,5 @@
 
 (setq x 1)
 (if (list? x) (length x) 0)
+
+eof

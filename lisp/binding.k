@@ -12,3 +12,5 @@
 (setq x '(a b c))
 (len x)
 (binding 'len)
+
+eof

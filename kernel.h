@@ -278,13 +278,13 @@ extern kerncell readaux(), readaux1(), transform(),
 		Vprinc(), Vtab(), Vterpri(), Vprlen(), Viobuf(), Lchanp(),
 		Vpp();
 extern void closechan(iochan);
-/* extern int bufprint(int, iochan, char*, ...); */
+extern int bufprint(int, iochan, char*, ...);
 extern int atomkind(char*);
 extern int isnum(char*);
 extern void tab(int, iochan);
 extern int printlen(kerncell, iochan, int);
 extern void pp(kerncell, iochan, int, int);
-/* extern int printaux(int, kerncell, iochan, ...); */
+extern int printaux(int, kerncell, iochan, ...);
 extern void initio();
 extern int nexttok(iochan);
 extern int skipeoltok(iochan, int);

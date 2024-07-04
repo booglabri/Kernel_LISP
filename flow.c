@@ -48,7 +48,7 @@ word	 more;
 {
 	CATpush();
 	/* get ready for throws: */
-	if (!CONVcell(setjmp(catstk[cattop].jmp)))
+	if (!setjmp(catstk[cattop].jmp))
 	   if (more.i)
 	   {  kerncell (* cfun)() = (kerncell (*)()) expr;
 	      expr = (* cfun)(more);		    /* cfun may have throws */
@@ -67,7 +67,7 @@ word	 more;
 	   error(catchsym,"no catch for this tag",catres->CELLcar);
 	else {
 	   cleanup();
-	   longjmp(catstk[CATpop()].jmp,catres);       /* try another catch */
+	   longjmp(catstk[CATpop()].jmp,1);       /* try another catch */
 	}
 	CATpop();		 /* there was no throw, so ignore the catch */
 	return(expr);
@@ -99,7 +99,7 @@ kerncell expr, tag;
 {
 	catres->CELLcar = tag;
 	catres->CELLcdr = expr;
-	longjmp(catstk[cattop].jmp,catres);
+	longjmp(catstk[cattop].jmp,1);
 } /* throw */
 
 kerncell

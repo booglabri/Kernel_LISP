@@ -52,3 +52,5 @@
 (optimize 'd 100)
 (optimize 'e 100)
 (optimize 'f 100)
+
+eof

@@ -4,3 +4,5 @@
            [t (+ (atoms (car expr)) (atoms (cdr expr)))]))
 
 (atoms '(a b (c d) e))
+
+eof

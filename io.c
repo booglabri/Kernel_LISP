@@ -3,6 +3,7 @@
  */
 #include "kernel.h"
 #include <math.h>
+#include <stdarg.h>
 
 #define EOL	'\n'
 #define TAB	'\t'
@@ -417,12 +418,18 @@ kerncell list;
 } /* transform */
 
 int
-printaux (flag,expr,chan,max)  /* ------------------------------- auxiliary */
-int	 flag;
-register kerncell expr;
-iochan	 chan;
-int	 max;		/* max specifies an upper bound when flag is LENGTH */
-{
+printaux(int flag,            /* ------------------------------- auxiliary */
+	 register kerncell expr,
+	 iochan	 chan,
+	 ...)
+ {
+   int max;   /* max specifies an upper bound when flag is LENGTH */
+   va_list argptr;
+
+   va_start(argptr, chan);
+   max = va_arg(argptr, int);
+   va_end(argptr);
+
 	if (ISsym(expr))			       /* is expr a symbol? */
 	   return(bufprint((flag == PRINC && *CONVsym(expr)->name == '|'
 			    ? STRIP : flag),
@@ -468,23 +475,25 @@ int	 max;		/* max specifies an upper bound when flag is LENGTH */
 		} while (expr != NIL);
 		size += bufprint(flag,chan,(oflag == LISTOBJ ? ")" : "}"));
 		return(size);
-	     }
-	  default:
-		return(bufprint(flag,chan,"<@:%1d>",expr->CELLcar));
-	} /* switch */
+             }
+          default:
+                return(bufprint(flag,chan,"<@:%1d>",expr->CELLcar));
+        } /* switch */
 } /* printaux */
 
 int
-bufprint (flag,chan,format,arg)  /* ------------------------ buffered print */
-int    flag;
-iochan chan;
-char   *format;
-word   arg;
+bufprint (int flag,             /* ------------------------ buffered print */
+          iochan chan,
+          char *format,
+          ...)
 {
    static char outputbuf[CHANBUFSIZE+2];
    char *outbuf = outputbuf;
-
-	sprintf(outbuf,format,arg);
+   va_list arg;
+ 
+	va_start(arg, format);
+	vsprintf(outbuf,format,arg);
+	va_end(arg);
 	if (flag == LENGTH)
 	   return(strlen(outputbuf));
 	else if (flag == STRIP) {		/* strip |symbol| to symbol */
