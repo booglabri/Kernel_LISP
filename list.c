@@ -429,6 +429,7 @@ Lmemq ()  /* ------------------------------------------- (memq 'expr 'list) */
 	return(NIL);
 } /* Lmemq */
 
+int
 member (expr,list)  /* -------------------------- is expr a member of list? */
 kerncell expr;
 register kerncell list;
@@ -441,6 +442,7 @@ register kerncell list;
 	return(0);
 } /* member */
 
+int
 memq (expr,list)  /* ---------------- has list an element identical to expr? */
 kerncell expr;
 register kerncell list;
@@ -467,6 +469,7 @@ Lnequal ()  /* ------------------------------------- (nequal 'expr1 'expr2) */
 	return(equal(ARGnum1,ARGnum2) ? NIL : TTT);
 } /* Lnequal */
 
+int
 equal (expr1,expr2)  /* -------------------------------- equal(expr1,expr2) */
 register kerncell expr1, expr2;
 {

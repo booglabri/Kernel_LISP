@@ -12,6 +12,7 @@ void _interrupt ()
 } /* _interrupt */
 #endif /* SIGNAL */
 
+void
 initialize ()
 {
 	initcelltab();

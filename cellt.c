@@ -36,6 +36,7 @@ int size;
 	return(res);
 } /* new */
 
+void
 initcelltab ()  /* ------------------------------ initialize the cell table */
 {
    int	    range = SMALLINTHIGH - SMALLINTLOW;

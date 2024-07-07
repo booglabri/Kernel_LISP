@@ -74,6 +74,7 @@ word	 more;
 	return(expr);
 } /* catch */
 
+void
 cleanup ()  /* ------------------------------ clean up stacks after a throw */
 {
    register int vtop = catstk[cattop].vartop;
@@ -146,10 +147,11 @@ Verror ()  /* --------------------------- (error 'source 'message ['extra]) */
 	return(TTT);
 } /* Verror */
 
+int
 error (source,message,extra)  /* ------------------- error handling routine */
-kerncell source;
+void *source;	              /* pointer to kerncell or kernsym */
 char *message;
-kerncell extra;
+void *extra;	      	      /* pointer to kerncell or kernsym */
 {
 	errocc = 1;					  /* set error flag */
 	if (errshow) {
@@ -172,6 +174,7 @@ kerncell extra;
 	errlevel();				       /* enter error level */
 } /* error */
 
+void
 errlevel ()  /* ----------------------------- error level's read-eval-print */
 {
    kerncell obj;
@@ -189,6 +192,7 @@ errlevel ()  /* ----------------------------- error level's read-eval-print */
 	}
 } /* errlevel */
 
+int
 faterr (message)  /* --------------------------------- fatal error handling */
 char *message;
 {
@@ -196,6 +200,7 @@ char *message;
 	exit(1);
 } /* faterr */
 
+void
 topexec ()  /* ------------------------------------------- kernel executive */
 {
 	bufprint(PRINT,_outchan,"KERNEL V1, Aug 87\n");

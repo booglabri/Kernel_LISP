@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include <sys/wait.h>
 
 kerncell
 Uvoid ()  /* ------------------------------------------------ (void [expr]) */
@@ -222,6 +223,7 @@ Vload ()  /* -------------------------------------- (load 'name ['verbose]) */
 	return(TTT);
 } /* Vload */
 
+kerncell
 load (name,verbose)  /* ----------------------------------------- auxiliary */
 kerncell name;
 int verbose;
@@ -269,6 +271,7 @@ Ushell () /* --------------------------------------------------- (! [args]) */
 	return(mkinum(subshell(strbuf)));
 } /* Ushell */
 
+int
 subshell (str)  /* -------------------------------------- create a subshell */
 char *str;
 {

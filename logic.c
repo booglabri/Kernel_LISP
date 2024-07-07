@@ -86,6 +86,7 @@ Uall ()  /* --------------- (all (var1 dom1 ... varn domn) expr1 ... exprn) */
 	return(all(list->CELLcar,list->CELLcdr));
 } /* Uall */
 
+int
 checkdoms (doms)  /* ----------------------------- check doamin designators */
 register kerncell doms;
 {

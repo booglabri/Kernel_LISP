@@ -242,6 +242,7 @@ int	 stacked;		  /* non-zero when args are already stacked */
 	   return(*(head->CELLvec + index->CELLinum));
 } /* evalvector */
 
+int
 checkvars (vars)  /* ---------- check that elements of vars are all symbols */
 register kerncell vars;		     /* returns the length of the vars list */
 {
@@ -256,6 +257,7 @@ register kerncell vars;		     /* returns the length of the vars list */
 	return(count);
 } /* checkvars */
 
+void
 savevars (vars)  /* ------------------- save the bindings of vars in varstk */
 register kerncell vars;
 {
@@ -270,6 +272,7 @@ register kerncell vars;
 	}
 } /* savevars */
 
+void
 restorevars (vars)  /* ------------------- restore the binding of variables */
 register kerncell vars;
 {

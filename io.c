@@ -62,6 +62,7 @@ int mode;
 	return(chan);
 } /* openchan */
 
+void
 closechan (chan)  /* ---------------------------------------- close channel */
 iochan chan;
 {
@@ -72,6 +73,7 @@ iochan chan;
 	free(chan);
 } /* closechan */
 
+void
 initio ()  /* ------------------------------------- initialize I/O channels */
 {
 	inchan  = mkchan(_inchan  = openchan(stdin,INCHAN));
@@ -181,6 +183,7 @@ int	 flag;
 	return(chan->tok);
 } /* skipeoltok */
 
+int
 atomkind (name)  /* ----------- work out whether name is a number or symbol */
 register char *name;
 {
@@ -213,6 +216,7 @@ register char *name;
 	return(SYMTOK);						  /* symbol */
 } /* atomkind */
 
+int
 isnum (name)  /* --------------------------------- is name a number string? */
 register char *name;
 {
@@ -761,6 +765,7 @@ int	 lmar, rmar;
 	bufprint(PRINT,chan,(flag == LISTOBJ ? ")" : "}"));
 } /* pp */
 
+int
 printlen (expr,chan,rmar)  /* ------------------------------ length of expr */
 kerncell expr;
 iochan	 chan;

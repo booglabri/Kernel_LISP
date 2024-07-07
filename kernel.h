@@ -250,15 +250,20 @@ extern kernsym  nil, ttt, eofsym, inchansym, outchansym, errchansym;
 extern kernsym  lamsym, vlamsym, ulamsym, mlamsym;
 /* symt.c: */
 extern kernsym  addsym(), findsym(), mksym(), _mksym(), newsym();
+extern void initsymtab();
 /* cellt.c: */
 extern char	*new();
 extern kerncell freshcell(), collectgarb(), mkinum(), mkrnum(),
 		mkstr(), _mkstr(), mkchan(), mkcell(), mkset();
+extern void initcelltab();
 /* eval.c: */
 extern kernsym  evalsym, callsym, applysym;
 extern kerncell Leval(), eval(), Vcall(), Lapply(), evalcall(),
 		evallam(), evalvlam(), evalulam(), evalmlam(),
 		expand(), evalvector(), mkargslist();
+extern int checkvars(register kerncell);
+extern void savevars(register kerncell);
+extern void restorevars(register kerncell);
 /* io.c: */
 extern kernsym  opensym, closesym, flushsym, readsym, printsym, princsym,
 		tabsym, terprisym, prlensym, iobufsym, chanpsym, ppsym;
@@ -266,6 +271,11 @@ extern kerncell readaux(), readaux1(), transform(),
 		Lopen(), openaux(), Lclose(), Vflush(), Vread(), Vprint(),
 		Vprinc(), Vtab(), Vterpri(), Vprlen(), Viobuf(), Lchanp(),
 		Vpp();
+extern void initio();
+extern void closechan(iochan);
+extern int atomkind(register char *);
+extern int isnum(register char *);
+extern int printlen(kerncell, iochan, int);
 /* arith.c: */
 extern kernsym  plussym, minussym, timessym, divsym, sumsym, prodsym, remsym,
 		powsym, incsym, decsym, abssym, negsym, intsym, realsym,
@@ -301,6 +311,9 @@ extern kerncell Lcar(), Lcdr(), Lcxxr(), Lnthelem(), Lnthpair(),
 		Lreverse(), Ldreverse(), dreverse(),
 		Lmember(), Lmemq(), Lequal(), Lnequal(), Leq(), Lneq(),
 		Latomp(), Llistp(), Lpairp(), Lnullp();
+extern int equal(register kerncell, register kerncell);
+extern int member(kerncell, register kerncell);
+extern int memq(kerncell, register kerncell);
 /* set.c: */
 extern kernsym  convsetsym, dconvsetsym, convlistsym, dconvlistsym,
 		esetsym, isetsym, unionsym, intsecsym, diffsym, subsetsym;
@@ -312,6 +325,7 @@ extern kernsym  notsym, andsym, orsym, condsym, implysym, equivsym,
 		allsym, existsym, onesym;
 extern kerncell Lnot(), Uand(), Uor(), Ucond(), Limply(), Lequiv(),
 		Uall(), all(), Uexist(), exist(), Uone();
+extern int checkdoms(register kerncell);
 /* prop.c: */
 extern kernsym  putpropsym, rempropsym, getsym, plistsym, setplistsym,
 		assocsym, assqsym;
@@ -326,6 +340,11 @@ extern kernsym  catchsym, throwsym, caperrsym, errorsym, toplevelsym,
 extern kerncell catch(), throw(), caperr(),
 		Ucatch(), Vthrow(), Ucaperr(), Verror(), Ltoplevel(),
 		Lreset(), Vexit();
+extern int error(void *, char *, void *);
+extern int faterr(char *);
+extern void errlevel();
+extern void cleanup();
+extern void topexec();
 /* iter.c: */
 extern kernsym  progsym, gosym, returnsym, dosym;
 extern kerncell Uprog(), prog(), Ugo(), Vreturn(), Udo();
@@ -337,3 +356,7 @@ extern kernsym  voidsym, quotesym, kwotesym, defsym, funsym, argsym, letsym,
 		setsym, setqsym, constsym, sssym, loadsym, shellsym;
 extern kerncell Uvoid(), Uquote(), Lkwote(), Udef(), Mfun(), Larg(), Mlet(),
 		Lset(), Usetq(), Uconst(), Vss(), Vload(), Ushell ();
+extern kerncell load(kerncell, int);
+extern int subshell(char *);
+/* init.c */
+extern void initialize();
