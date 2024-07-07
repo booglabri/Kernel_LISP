@@ -2,7 +2,9 @@
  * I/O routines:
  */
 #include "kernel.h"
+#include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 #define EOL	'\n'
 #define TAB	'\t'

@@ -5,6 +5,8 @@
  * once the table is full, or once the dynamic storage is exhausted.
  */
 #include "kernel.h"
+#include <stdlib.h>
+#include <string.h>
 
 extern	 kernsym symtab[];
 kerncell celltab[CELLTABSIZE];  /* cell table */
@@ -20,7 +22,7 @@ char *
 new (size)  /* ------------------------------------- allocates 'size' bytes */
 int size;
 {
-   char *res, *malloc();
+   char *res;
 
 	if ((res = malloc(size)) == NULL) {
 	   phase1 = 0;			/* terminate block allocation phase */
@@ -35,7 +37,6 @@ int size;
 initcelltab ()  /* ------------------------------ initialize the cell table */
 {
    int	    range = SMALLINTHIGH - SMALLINTLOW;
-   char	    *malloc();
    register int blkidx;
    register kerncell blkptr;
 
@@ -56,7 +57,6 @@ kerncell
 freshcell ()  /* -------------------------------- returns a fresh cons-cell */
 {
    static kerncell freecell;
-   char	  *malloc();
 
 	if (phase1) {		/* in this phase storage is still available */
 	   if (blockidx++ < BLOCKSIZE) {       /* get it from current block */

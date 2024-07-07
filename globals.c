@@ -38,7 +38,7 @@ int celltop = EVALSTKSIZE;	/* top of cell stack */
 int vartop  = -1;		/* top of variable stack */
 int argtop  = -1;		/* top of argument stack */
 int _argtop = -1;		/* argtop for the last vlam */
-int (* org_interrupt)();	/* original interrupt handler */
+void (* org_interrupt)();	/* original interrupt handler */
 
 kernsym /* internals: */
 	_bquotesym, _commasym, _atsym,

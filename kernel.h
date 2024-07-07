@@ -2,7 +2,7 @@
  * header definitions and macros:
  */
 #include <stdio.h>
-#define UNIX		0
+#define UNIX		1
 #define SIGNAL		1
 
 /* scalar constants: */
@@ -238,7 +238,7 @@ extern struct	variable varstk[];
 extern kerncell evalstk[], argstk[];
 extern int	evaltop, celltop, vartop, argtop, _argtop;
 extern kerncell read_and_eval, top_lev_call, top_lev_tags;
-extern int	(* org_interrupt)();	      /* original interrupt handler */
+extern void	(* org_interrupt)();	      /* original interrupt handler */
 
 /* internals: */
 extern kernsym  _bquotesym, _commasym, _atsym,

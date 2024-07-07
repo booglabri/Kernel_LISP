@@ -2,6 +2,7 @@
  * list manipulation functions:
  */
 #include "kernel.h"
+#include <string.h>
 
 kerncell
 Lcar ()  /* --------------------------------------------------- (car 'list) */

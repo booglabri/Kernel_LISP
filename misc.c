@@ -2,6 +2,10 @@
  * miscelanous functions:
  */
 #include "kernel.h"
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
 
 kerncell
 Uvoid ()  /* ------------------------------------------------ (void [expr]) */
@@ -268,7 +272,8 @@ Ushell () /* --------------------------------------------------- (! [args]) */
 subshell (str)  /* -------------------------------------- create a subshell */
 char *str;
 {
-   int	    (* save_intr)(), procid, status;
+   void (* save_intr)();
+   int procid, status;
    register int iwait;
 
 	save_intr = signal(SIGINT,SIG_IGN);		  /* save interrupt */
@@ -282,4 +287,4 @@ char *str;
 	signal(SIGINT,save_intr);		 /* restore saved interrupt */
 	return(iwait == -1 ? -1 : status);
 } /* subshell */
-#endif UNIX
+#endif /* UNIX */

@@ -4,6 +4,8 @@
  * Entries in each linked list are kept alphabetically sorted.
  */
 #include "kernel.h"
+#include <string.h>
+
 kernsym symtab [HASHTABSIZE];	 /* symbol table */
 
 initsymtab ()  /* ----------------------------- initialize the symbol table */
