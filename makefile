@@ -1,10 +1,13 @@
 OBJS     := $(shell cat link.rsp | tr -s "+\n" " " | sed -e "s/\.obj/.o/g")
-#CFLAGS   := -g3 -w -fcompare-debug-second
-#CFLAGS   := -g3 -Wno-implicit-int -Wno-implicit-function-declaration -Wno-int-to-pointer-cast
-#CFLAGS   := -g3
+#CFLAGS   := -I. -g3 -w -fcompare-debug-second
+#CFLAGS   := -I. -g3 -Wno-implicit-int -Wno-implicit-function-declaration -Wno-int-to-pointer-cast
+#CFLAGS   := -I. -g3
 CFLAGS   := -I.
 LDFLAGS  := -static -L. -lkern -lm
-#CC       := arm-linux-gnueabihf-gcc
+ifeq ($(TARGET), armhf)
+	CC       := arm-linux-gnueabihf-gcc
+	QEMU     := qemu-arm -L /usr/arm-linux-gnueabihf
+endif
 STRIP    := strip
 
 all: kern kcomp
@@ -29,6 +32,8 @@ libkern.a: $(OBJS)
 	./kcomp $< $@.c
 	$(CC) $(CFLAGS) $@.c -o $@ $(LDFLAGS)
 
+.PHONY: clean cleanlips chksizes showobjs
+
 clean:
 	$(RM) $(OBJS) kern.o kern kcomp.o kcomp libkern.a
 
@@ -38,7 +43,7 @@ cleanlisp:
 chksizes: chksizes.c
 	$(RM) $@
 	$(CC) -o $@ $?
-	./$@
+	$(QEMU) ./$@
 	$(RM) $@
 
 showobjs: $(OBJS)
