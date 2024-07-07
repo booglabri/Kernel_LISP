@@ -1,28 +1,51 @@
-OBJ1 =	arith.obj cellt.obj eval.obj flow.obj globals.obj
-OBJ2 =	init.obj io.obj iter.obj list.obj logic.obj map.obj
-OBJ3 =	misc.obj prop.obj set.obj str.obj sym.obj symt.obj
-OBJ4 =	vec.obj
-OBJ =	$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)
-CFLAGS = -AL -Ot
+OBJS     := $(shell cat link.rsp | tr -s "+\n" " " | sed -e "s/\.obj/.o/g")
+#CFLAGS   := -I. -g3 -w -fcompare-debug-second
+#CFLAGS   := -I. -g3 -Wno-implicit-int -Wno-implicit-function-declaration -Wno-int-to-pointer-cast
+#CFLAGS   := -I. -g3
+CFLAGS   := -I.
+LDFLAGS  := -static -L. -lkern -lm
+ifeq ($(TARGET), armhf)
+	CC       := arm-linux-gnueabihf-gcc
+	QEMU     := qemu-arm -L /usr/arm-linux-gnueabihf
+endif
+STRIP    := strip
 
-all: kern.exe kcomp.exe
+all: kern kcomp
 
-kern.exe: $(OBJ) kern.obj link.rsp
-	link kern.obj @link.rsp,a.exe;
-	exemod a.exe /stack 5000
-	exepack a.exe kern.exe
-	del a.exe
+kern.o: kernel.h libkern.a
+kern: kern.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(STRIP) $@
 
-kcomp.exe: $(OBJ) kcomp.obj link.rsp
-	link kcomp.obj @link.rsp,a.exe;
-	exemod a.exe /stack 5000
-	exepack a.exe kcomp.exe
-	del a.exe
+kcomp.o: kernel.h libkern.a
+kcomp: kcomp.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(STRIP) $@
 
-link.rsp: makefile
-	echo $(OBJ1)+ > link.rsp
-	echo $(OBJ2)+ >> link.rsp
-	echo $(OBJ3)+ >> link.rsp
-	echo $(OBJ4) >> link.rsp
+libkern.a: $(OBJS)
+	ar -crs libkern.a $^
 
-$(OBJ) kcomp.obj kern.obj: kernel.h 
+%.o: %.c kernel.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%: %.k kernel.h libkern.a
+	./kcomp $< $@.c
+	$(CC) $(CFLAGS) $@.c -o $@ $(LDFLAGS)
+
+.PHONY: clean cleanlips chksizes showobjs
+
+clean:
+	$(RM) $(OBJS) kern.o kern kcomp.o kcomp libkern.a
+
+cleanlisp:
+	$(RM) lisp/*.c `find lisp -type f -executable -print`
+
+chksizes: chksizes.c
+	$(RM) $@
+	$(CC) -o $@ $?
+	$(QEMU) ./$@
+	$(RM) $@
+
+showobjs: $(OBJS)
+	@echo $(OBJS) | tr " " "\n"
+
