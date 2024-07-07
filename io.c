@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <stdarg.h>
 
 #define EOL	'\n'
 #define TAB	'\t'
@@ -423,12 +424,19 @@ kerncell list;
 			     mkcell(transform(list->CELLcdr),nil))));
 } /* transform */
 
-printaux (flag,expr,chan,max)  /* ------------------------------- auxiliary */
-int	 flag;
-register kerncell expr;
-iochan	 chan;
-int	 max;		/* max specifies an upper bound when flag is LENGTH */
+int
+printaux (int flag,     /* ------------------------------- auxiliary */
+	  register kerncell expr,
+	  iochan chan,
+	  ...)
 {
+   int	 max;		/* max specifies an upper bound when flag is LENGTH */
+   va_list argptr;
+
+        va_start(argptr, chan);
+	max = va_arg(argptr, int);
+	va_end(argptr);
+   
 	if (ISsym(expr))			       /* is expr a symbol? */
 	   return(bufprint((flag == PRINC && *CONVsym(expr)->name == '|'
 			    ? STRIP : flag),
@@ -480,16 +488,19 @@ int	 max;		/* max specifies an upper bound when flag is LENGTH */
 	} /* switch */
 } /* printaux */
 
-bufprint (flag,chan,format,arg)  /* ------------------------ buffered print */
-int    flag;
-iochan chan;
-char   *format;
-word   arg;
+int
+bufprint (int flag,      /* ------------------------ buffered print */
+	  iochan chan,
+	  char *format,
+	  ...)
 {
    static char outputbuf[CHANBUFSIZE+2];
    char *outbuf = outputbuf;
+   va_list arg;
 
-	sprintf(outbuf,format,arg);
+        va_start(arg, format);
+	vsprintf(outbuf, format, arg);
+	va_end(arg);
 	if (flag == LENGTH)
 	   return(strlen(outputbuf));
 	else if (flag == STRIP) {		/* strip |symbol| to symbol */

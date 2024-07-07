@@ -276,6 +276,8 @@ extern void closechan(iochan);
 extern int atomkind(register char *);
 extern int isnum(register char *);
 extern int printlen(kerncell, iochan, int);
+extern int bufprint(int, iochan, char *, ...);
+extern int printaux(int, kerncell, iochan, ...);
 /* arith.c: */
 extern kernsym  plussym, minussym, timessym, divsym, sumsym, prodsym, remsym,
 		powsym, incsym, decsym, abssym, negsym, intsym, realsym,
