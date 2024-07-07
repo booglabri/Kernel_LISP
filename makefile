@@ -1,8 +1,9 @@
 OBJS     := $(shell cat link.rsp | tr -s "+\n" " " | sed -e "s/\.obj/.o/g")
 #CFLAGS   := -I. -g3 -w -fcompare-debug-second
+CFLAGS   := -I. -g3 -Wno-implicit-int -Wno-implicit-function-declaration
 #CFLAGS   := -I. -g3 -Wno-implicit-int -Wno-implicit-function-declaration -Wno-int-to-pointer-cast
 #CFLAGS   := -I. -g3
-CFLAGS   := -I.
+#CFLAGS   := -I.
 LDFLAGS  := -static -L. -lkern -lm
 ifeq ($(TARGET), armhf)
 	CC       := arm-linux-gnueabihf-gcc
