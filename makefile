@@ -33,7 +33,10 @@ libkern.a: $(OBJS)
 	./kcomp $< $@.c
 	$(CC) $(CFLAGS) $@.c -o $@ $(LDFLAGS)
 
-.PHONY: clean cleanlips chksizes showobjs
+.PHONY: run clean cleanlips chksizes showobjs
+
+run:
+	$(QEMU) ./kern
 
 clean:
 	$(RM) $(OBJS) kern.o kern kcomp.o kcomp libkern.a
