@@ -33,6 +33,9 @@
 #define ISdigit(ch)		((ch) >= '0' && (ch) <= '9')
 #define DIGITvalue(ch)		((ch) - '0')
 
+void tab(int, iochan);
+void pp(register kerncell, iochan, int, int);
+
 int  inumber = 0;
 real rnumber = 0.0;
 
@@ -619,6 +622,7 @@ Vtab ()  /* ----------------------------------------- (tab 'column ['chan]) */
 	return(TTT);
 } /* Vtab */
 
+void
 tab (column,chan)  /* ------------------------------------------------- tab */
 int column;
 iochan chan;
@@ -699,6 +703,7 @@ Vpp ()  /* --------------------------------------------- (pp 'expr ['chan]) */
 	return(TTT);
 } /* Vpp */
 
+void
 pp (expr,chan,lmar,rmar)  /* --------- pretty print expr within the margins */
 register kerncell expr;
 iochan	 chan;

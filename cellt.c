@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+void mark(register kerncell);
+
 extern	 kernsym symtab[];
 kerncell celltab[CELLTABSIZE];  /* cell table */
 int celltabsize = CELLTABSIZE;  /* cell table size */
@@ -141,6 +143,7 @@ collectgarb ()  /* ---------------------------------------- collect garbage */
 	return(freelist);
 } /* collectgarb */
 
+void
 mark (obj)  /* --------------------------------- mark cells that are in use */
 register kerncell obj;
 {
