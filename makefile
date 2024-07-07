@@ -3,15 +3,16 @@ OBJS     := $(shell cat link.rsp | tr -s "+\n" " " | sed -e "s/\.obj/.o/g")
 #CFLAGS   := -I. -g3 -Wno-implicit-int -Wno-implicit-function-declaration -Wno-int-to-pointer-cast
 #CFLAGS   := -I. -g3 -Wno-implicit-int -Wno-implicit-function-declaration
 #CFLAGS   := -I. -g3 -Wno-implicit-int
-CFLAGS   := -I. -g3
-#CFLAGS   := -I.
+#CFLAGS   := -I. -g3
+#CFLAGS   := -I. -O3
+CFLAGS   := -I.
 LDFLAGS  := -static -L. -lkern -lm
 ifeq ($(TARGET), armhf)
 	CC       := arm-linux-gnueabihf-gcc
 	QEMU     := qemu-arm -L /usr/arm-linux-gnueabihf
 endif
-#STRIP    := strip
-STRIP    := echo
+STRIP    := strip
+#STRIP    := echo
 
 all: kern kcomp
 
@@ -32,7 +33,7 @@ libkern.a: $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 %: %.k kernel.h libkern.a
-	./kcomp $< $@.c
+	$(QEMU) ./kcomp $< $@.c
 	$(CC) $(CFLAGS) $@.c -o $@ $(LDFLAGS)
 
 .PHONY: run clean cleanlips chksizes showobjs

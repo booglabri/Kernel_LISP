@@ -1,3 +1,4 @@
+; Load all examples
 (load 'lisp/add.k 1)
 (load 'lisp/atoms.k 1)
 (load 'lisp/atoms_def.k 1)
@@ -7,3 +8,5 @@
 (load 'lisp/graph.k 1)
 (load 'lisp/increment.k 1)
 (load 'lisp/mean.k 1)
+
+eof

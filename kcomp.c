@@ -105,8 +105,8 @@ compaux ()  /* -------------------------------------------------- auxiliary */
 	forms = dreverse(forms);
 	/* produce object code: */
 	bufprint(PRINC,tchan->CELLchan,
-		 "#include \"/user/hekmat/kern/kernel.h\"\n");
-	bufprint(PRINC,tchan->CELLchan,"auxiliary ()\n{\n");
+		 "#include \"kernel.h\"\n");
+	bufprint(PRINC,tchan->CELLchan,"int auxiliary ()\n{\n");
 	gensyms(symtree,tchan->CELLchan);		/* generate symbols */
 	genstrs(strtree,tchan->CELLchan);		/* generate strings */
 	geninums(inumtree,tchan->CELLchan);	       /* generate integers */
@@ -114,7 +114,7 @@ compaux ()  /* -------------------------------------------------- auxiliary */
 	gencode(forms,tchan->CELLchan);	     /* generate code for the forms */
 	bufprint(PRINC,tchan->CELLchan,"}\n");
 	bufprint(PRINC,tchan->CELLchan,			   /* main function */
-		       "main() {initialize(); auxiliary(); topexec();}\n");
+		       "int main() {initialize(); auxiliary(); topexec();}\n");
 	closechan(tchan->CELLchan);
 	return(NIL);
 } /* compaux */
