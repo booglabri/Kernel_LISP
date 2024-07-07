@@ -35,6 +35,9 @@
 
 void tab(int, iochan);
 void pp(register kerncell, iochan, int, int);
+int nexttok(register iochan);
+int skpeoltok(register iochan, int);
+int hasmacro(register kerncell);
 
 int  inumber = 0;
 real rnumber = 0.0;
@@ -106,6 +109,7 @@ register iochan chan;
 	return(chan->ch = chan->buf[chan->pos++]);
 } /* nextch */
 
+int
 nexttok (chan)  /* -------------- fetch and return the next token from chan */
 register iochan chan;
 {
@@ -170,6 +174,7 @@ register iochan chan;
 	} /* switch */
 } /* nexttok */
 
+int
 skipeoltok (chan,flag)  /* ------- skip eol token and return the next token */
 register iochan chan;
 int	 flag;
@@ -371,6 +376,7 @@ int	 bq;		     /* non-zero when in a back-quoted s-expression */
 	return(obj);
 } /* readaux1 */
 
+int
 hasmacro (expr)  /* -------- returns non-zero when expr contains ',' or '@' */
 register kerncell expr;
 {

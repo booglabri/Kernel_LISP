@@ -38,6 +38,7 @@ void genrnums(rtree, iochan);
 void gencode(kerncell, iochan);
 void gencells(kerncell, iochan);
 
+int
 main (argn,argv)  /* ------------------------------------------------- main */
 int  argn;
 char *argv[];
