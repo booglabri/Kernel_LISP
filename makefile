@@ -10,7 +10,8 @@ ifeq ($(TARGET), armhf)
 	CC       := arm-linux-gnueabihf-gcc
 	QEMU     := qemu-arm -L /usr/arm-linux-gnueabihf
 endif
-STRIP    := strip
+#STRIP    := strip
+STRIP    := echo
 
 all: kern kcomp
 
