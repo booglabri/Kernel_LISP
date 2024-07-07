@@ -186,7 +186,7 @@ typedef struct channel *iochan;		/* I/O channel */
 	} else faterr(err_varstk)
 #define VARpop()						\
 	{  varstk[vartop].sym->flag = varstk[vartop].flag;	\
-	   varstk[vartop].sym->bind = varstk[vartop--].bind; }
+	  varstk[vartop].sym->bind = varstk[vartop].bind; --vartop;}
 #define ARGpush(obj)						\
 	if (++argtop < EVALSTKSIZE) argstk[argtop] = (obj);	\
 	else faterr(err_argstk)
