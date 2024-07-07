@@ -68,7 +68,7 @@ word	 more;
 	   error(catchsym,"no catch for this tag",catres->CELLcar);
 	else {
 	   cleanup();
-	   longjmp(catstk[CATpop()].jmp,catres);       /* try another catch */
+	   longjmp(catstk[CATpop()].jmp,(int)catres);       /* try another catch */
 	}
 	CATpop();		 /* there was no throw, so ignore the catch */
 	return(expr);
@@ -99,7 +99,7 @@ kerncell expr, tag;
 {
 	catres->CELLcar = tag;
 	catres->CELLcdr = expr;
-	longjmp(catstk[cattop].jmp,catres);
+	longjmp(catstk[cattop].jmp,(int)catres);
 } /* throw */
 
 kerncell

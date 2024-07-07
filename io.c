@@ -147,7 +147,7 @@ register iochan chan;
 		return(SYMTOK);
 	     }
 	  case EOL:  return(EOLTOK);		 /* end-of-line is reported */
-	  case EOF:  return(EOFTOK);		 /* end-of-file is reported */
+	  case (char)EOF:  return(EOFTOK);	 /* end-of-file is reported */
 	  case ESCAPE: nextch(chan);			  /* ignore escapes */
 		       goto start;
 	  default:
