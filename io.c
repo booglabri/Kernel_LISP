@@ -482,10 +482,10 @@ printaux (int flag,     /* ------------------------------- auxiliary */
 		} while (expr != NIL);
 		size += bufprint(flag,chan,(oflag == LISTOBJ ? ")" : "}"));
 		return(size);
-             }
-          default:
-                return(bufprint(flag,chan,"<@:%1d>",expr->CELLcar));
-        } /* switch */
+	     }
+	  default:
+		return(bufprint(flag,chan,"<@:%1d>",expr->CELLcar));
+	} /* switch */
 } /* printaux */
 
 int

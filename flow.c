@@ -49,7 +49,7 @@ word	 more;
 {
 	CATpush();
 	/* get ready for throws: */
-	if (!setjmp(catstk[cattop].jmp))
+	if (!CONVcell(setjmp(catstk[cattop].jmp)))
 	   if (more.i)
 	   {  kerncell (* cfun)() = (kerncell (*)()) expr;
 	      expr = (* cfun)(more);		    /* cfun may have throws */

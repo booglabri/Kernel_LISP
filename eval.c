@@ -112,7 +112,7 @@ evallam (lam,args,stacked) /* ------------------ evaluate a lam application */
 register kerncell lam, args;
 int stacked;			  /* non-zero when args are already stacked */
 {
-   int      arg1, nvars;
+   int	    arg1, nvars;
    kerncell obj, vars;
    register kerncell vs;
 

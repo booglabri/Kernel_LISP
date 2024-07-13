@@ -1,13 +1,7 @@
 /* KERNEL, 24/8/87 -- S. Hekmatpour
  * miscelanous functions:
  */
-#include <sys/wait.h>
 #include "kernel.h"
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <sys/wait.h>
 
 kerncell
 Uvoid ()  /* ------------------------------------------------ (void [expr]) */
