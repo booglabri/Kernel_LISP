@@ -4,6 +4,7 @@
  * error handling functions, and the top level functions.
  */
 #include "kernel.h"
+#include <stdlib.h>
 #include <setjmp.h>
 
 #define CATpush()				\
@@ -67,7 +68,7 @@ word	 more;
 	   error(catchsym,"no catch for this tag",catres->CELLcar);
 	else {
 	   cleanup();
-	   longjmp(catstk[CATpop()].jmp,1);       /* try another catch */
+	   longjmp(catstk[CATpop()].jmp,(int)catres);       /* try another catch */
 	}
 	CATpop();		 /* there was no throw, so ignore the catch */
 	return(expr);
@@ -99,7 +100,7 @@ kerncell expr, tag;
 {
 	catres->CELLcar = tag;
 	catres->CELLcdr = expr;
-	longjmp(catstk[cattop].jmp,1);
+	longjmp(catstk[cattop].jmp,(int)catres);
 } /* throw */
 
 kerncell
@@ -146,11 +147,11 @@ Verror ()  /* --------------------------- (error 'source 'message ['extra]) */
 	return(TTT);
 } /* Verror */
 
-long
+int
 error (source,message,extra)  /* ------------------- error handling routine */
-void *source;
+void *source;	              /* pointer to kerncell or kernsym */
 char *message;
-void *extra;
+void *extra;	      	      /* pointer to kerncell or kernsym */
 {
 	errocc = 1;					  /* set error flag */
 	if (errshow) {
@@ -191,7 +192,7 @@ errlevel ()  /* ----------------------------- error level's read-eval-print */
 	}
 } /* errlevel */
 
-long
+int
 faterr (message)  /* --------------------------------- fatal error handling */
 char *message;
 {

@@ -3,6 +3,11 @@
  */
 #include <sys/wait.h>
 #include "kernel.h"
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/wait.h>
 
 kerncell
 Uvoid ()  /* ------------------------------------------------ (void [expr]) */
@@ -219,7 +224,7 @@ Vload ()  /* -------------------------------------- (load 'name ['verbose]) */
 	return(TTT);
 } /* Vload */
 
-int
+kerncell
 load (name,verbose)  /* ----------------------------------------- auxiliary */
 kerncell name;
 int verbose;
@@ -271,8 +276,8 @@ int
 subshell (str)  /* -------------------------------------- create a subshell */
 char *str;
 {
-  void	    (* save_intr)();
-  int       procid, status;
+   void (* save_intr)();
+   int procid, status;
    register int iwait;
 
 	save_intr = signal(SIGINT,SIG_IGN);		  /* save interrupt */

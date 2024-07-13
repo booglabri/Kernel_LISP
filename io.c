@@ -2,14 +2,15 @@
  * I/O routines:
  */
 #include "kernel.h"
+#include <stdlib.h>
 #include <math.h>
+#include <string.h>
 #include <stdarg.h>
 
 #define EOL	'\n'
 #define TAB	'\t'
 #define SPACE	' '
 #define ESCAPE  033
-#define MYEOF   (char)EOF
 
 #define LPARENTOK	1	/* ( */
 #define RPARENTOK	2	/* ) */
@@ -32,6 +33,12 @@
 #define NEXTtok(chan)		((chan)->tok = nexttok(chan))
 #define ISdigit(ch)		((ch) >= '0' && (ch) <= '9')
 #define DIGITvalue(ch)		((ch) - '0')
+
+void tab(int, iochan);
+void pp(register kerncell, iochan, int, int);
+int nexttok(register iochan);
+int skpeoltok(register iochan, int);
+int hasmacro(register kerncell);
 
 int  inumber = 0;
 real rnumber = 0.0;
@@ -150,7 +157,7 @@ register iochan chan;
 		return(SYMTOK);
 	     }
 	  case EOL:  return(EOLTOK);		 /* end-of-line is reported */
-	  case MYEOF: return(EOFTOK);		 /* end-of-file is reported */
+	  case (char)EOF:  return(EOFTOK);	 /* end-of-file is reported */
 	  case ESCAPE: nextch(chan);			  /* ignore escapes */
 		       goto start;
 	  default:
@@ -418,18 +425,18 @@ kerncell list;
 } /* transform */
 
 int
-printaux(int flag,            /* ------------------------------- auxiliary */
-	 register kerncell expr,
-	 iochan	 chan,
-	 ...)
- {
-   int max;   /* max specifies an upper bound when flag is LENGTH */
+printaux (int flag,     /* ------------------------------- auxiliary */
+	  register kerncell expr,
+	  iochan chan,
+	  ...)
+{
+   int	 max;		/* max specifies an upper bound when flag is LENGTH */
    va_list argptr;
 
-   va_start(argptr, chan);
-   max = va_arg(argptr, int);
-   va_end(argptr);
-
+        va_start(argptr, chan);
+	max = va_arg(argptr, int);
+	va_end(argptr);
+   
 	if (ISsym(expr))			       /* is expr a symbol? */
 	   return(bufprint((flag == PRINC && *CONVsym(expr)->name == '|'
 			    ? STRIP : flag),
@@ -482,17 +489,17 @@ printaux(int flag,            /* ------------------------------- auxiliary */
 } /* printaux */
 
 int
-bufprint (int flag,             /* ------------------------ buffered print */
-          iochan chan,
-          char *format,
-          ...)
+bufprint (int flag,      /* ------------------------ buffered print */
+	  iochan chan,
+	  char *format,
+	  ...)
 {
    static char outputbuf[CHANBUFSIZE+2];
    char *outbuf = outputbuf;
    va_list arg;
- 
-	va_start(arg, format);
-	vsprintf(outbuf,format,arg);
+
+        va_start(arg, format);
+	vsprintf(outbuf, format, arg);
 	va_end(arg);
 	if (flag == LENGTH)
 	   return(strlen(outputbuf));

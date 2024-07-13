@@ -1,14 +1,28 @@
-OBJS     := $(shell cat link.rsp | tr -s "+\n" " " | sed -e "s/\.obj/.o/g")
+OBJS 	:= $(shell cat link.rsp | tr -s "+\n" " " | sed -e "s/\.obj/.o/g")
 #CFLAGS   := -I. -g3 -w -fcompare-debug-second
 #CFLAGS   := -I. -g3 -Wno-implicit-int -Wno-implicit-function-declaration -Wno-int-to-pointer-cast
-#CFLAGS   := -I. -g3
-CFLAGS   := -I.
-LDFLAGS  := -static -L. -lkern -lm
-ifeq ($(TARGET), armhf)
-	CC       := arm-linux-gnueabihf-gcc
-	QEMU     := qemu-arm -L /usr/arm-linux-gnueabihf
+#CFLAGS   := -I. -g3 -Wno-implicit-int -Wno-implicit-function-declaration
+#CFLAGS   := -I. -g3 -Wno-implicit-int
+CFLAGS  := -I.
+LDFLAGS := -L. -lkern -lm
+STRIP   := strip
+QEMU	:=
+
+ifeq ($(DEBUG), t)
+	CFLAGS  += -ggdb3
+	STRIP	:= echo
 endif
-STRIP    := strip
+ifeq ($(OPTIMIZE), t)
+	CFLAGS  += -O3
+endif
+ifeq ($(PROFILE), t)
+	CFLAGS	+= -pg
+	STRIP	:= echo
+endif
+ifeq ($(TARGET), armhf)
+	CC    	:= arm-linux-gnueabihf-gcc
+	QEMU    := qemu-arm -L /usr/arm-linux-gnueabihf
+endif
 
 all: kern kcomp
 
@@ -29,10 +43,13 @@ libkern.a: $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 %: %.k kernel.h libkern.a
-	./kcomp $< $@.c
+	$(QEMU) ./kcomp $< $@.c
 	$(CC) $(CFLAGS) $@.c -o $@ $(LDFLAGS)
 
-.PHONY: clean cleanlips chksizes showobjs
+.PHONY: run clean cleanlips chksizes showobjs
+
+run:
+	$(QEMU) ./kern
 
 clean:
 	$(RM) $(OBJS) kern.o kern kcomp.o kcomp libkern.a
@@ -45,7 +62,6 @@ chksizes: chksizes.c
 	$(CC) -o $@ $?
 	$(QEMU) ./$@
 	$(RM) $@
-
 showobjs: $(OBJS)
 	@echo $(OBJS) | tr " " "\n"
 

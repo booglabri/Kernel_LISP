@@ -33,11 +33,11 @@ char	 strbuf[STRBUFSIZE+2];		/* string buffer */
 struct	 variable varstk[VARSTKSIZE+1]; /* variable stack */
 kerncell evalstk[EVALSTKSIZE+1];	/* evaluation stack (also cell stack) */
 kerncell argstk[ARGSTKSIZE+1];		/* argument stack */
-long evaltop = -1;		/* top of evaluation stack */
-long celltop = EVALSTKSIZE;	/* top of cell stack */
-long vartop  = -1;		/* top of variable stack */
-long argtop  = -1;		/* top of argument stack */
-long _argtop = -1;		/* argtop for the last vlam */
+int evaltop = -1;		/* top of evaluation stack */
+int celltop = EVALSTKSIZE;	/* top of cell stack */
+int vartop  = -1;		/* top of variable stack */
+int argtop  = -1;		/* top of argument stack */
+int _argtop = -1;		/* argtop for the last vlam */
 void (* org_interrupt)();	/* original interrupt handler */
 
 kernsym /* internals: */

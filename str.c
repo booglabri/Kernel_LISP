@@ -2,6 +2,7 @@
  * string functions:
  */
 #include "kernel.h"
+#include <string.h>
 
 kerncell
 Ls_lt ()  /* --------------------------------------------- (<< 'str1 'str2) */

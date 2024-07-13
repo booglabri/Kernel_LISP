@@ -5,6 +5,10 @@
  * once the table is full, or once the dynamic storage is exhausted.
  */
 #include "kernel.h"
+#include <stdlib.h>
+#include <string.h>
+
+void mark(register kerncell);
 
 extern	 kernsym symtab[];
 kerncell celltab[CELLTABSIZE];  /* cell table */

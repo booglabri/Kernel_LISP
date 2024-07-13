@@ -2,6 +2,7 @@
  * symbol functions:
  */
 #include "kernel.h"
+#include <string.h>
 
 kerncell
 Lsymname ()  /* -------------------------------------------- (symname 'sym) */

@@ -5,6 +5,8 @@
  * with the object code of KERNEL itself.
  */
 #include "kernel.h"
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct snode {		/* symbol/string node */
 	char *str;			/* string/symbol name */
@@ -29,7 +31,6 @@ rtree rnumtree = NULL;		/* real tree */
 kernsym lastsym;		/* last symbol */
 char *source, *target;		/* source and target file names */
 
-/* kcomp.c */
 void gensyms(stree, iochan);
 void genstrs(stree, iochan);
 void geninums(itree, iochan);
