@@ -4,7 +4,6 @@
  * error handling functions, and the top level functions.
  */
 #include "kernel.h"
-#include <stdlib.h>
 #include <setjmp.h>
 
 #define CATpush()				\
