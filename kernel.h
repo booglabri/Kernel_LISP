@@ -136,8 +136,8 @@ typedef struct channel *iochan;		/* I/O channel */
 #define CELLvec			part.vect.vec
 
 #define CONVbyte(p)		((byte) (p))
-#define CONVint(p)		((long) (p))
-#define CONVintp(p)		((long *) (p))
+#define CONVint(p)		((int) (p))
+#define CONVintp(p)		((int *) (p))
 #define CONVreal(p)		((real) (p))
 #define CONVstr(p)		((char *) (p))
 #define CONVchan(p)		((iochan) (p))
@@ -236,7 +236,7 @@ extern iochan	_inchan, _outchan, _errchan;
 extern char	strbuf[];
 extern struct	variable varstk[];
 extern kerncell evalstk[], argstk[];
-extern long	evaltop, celltop, vartop, argtop, _argtop;
+extern int	evaltop, celltop, vartop, argtop, _argtop;
 extern kerncell read_and_eval, top_lev_call, top_lev_tags;
 extern void	(* org_interrupt)();	      /* original interrupt handler */
 

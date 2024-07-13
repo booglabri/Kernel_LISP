@@ -38,7 +38,7 @@ int stacked;			  /* non-zero when args are already stacked */
 {
    kerncell fox;
    kerncell (* fun) ();
-   long	    arg1;
+   int	    arg1;
 
      start:
 	if (ISlist(head)) {			   /* ((...) arg1 ... argn) */
@@ -112,8 +112,7 @@ evallam (lam,args,stacked) /* ------------------ evaluate a lam application */
 register kerncell lam, args;
 int stacked;			  /* non-zero when args are already stacked */
 {
-   long	    arg1;
-   int      nvars;
+   int      arg1, nvars;
    kerncell obj, vars;
    register kerncell vs;
 
@@ -153,9 +152,9 @@ evalvlam (vlam,args,stacked)  /* -------------- evaluate a vlam application */
 register kerncell vlam, args;
 int stacked;			  /* non-zero when args are already stacked */
 {
-   long arg1;
+   int arg1;
    kerncell obj, vars;
-   long save_argtop = _argtop;			   /* for nested vlam calls */
+   int save_argtop = _argtop;			   /* for nested vlam calls */
 
 	vlam = vlam->CELLcdr;				  /* drop vlam head */
 	if (!ISlist(vars = vlam->CELLcar) || checkvars(vars) != 1)
