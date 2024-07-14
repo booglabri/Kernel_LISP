@@ -6,6 +6,6 @@
 int
 main ()
 {
-	initialize();
-	topexec();
+        initialize();
+        topexec();
 } /* main */
