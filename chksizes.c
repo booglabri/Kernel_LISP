@@ -4,6 +4,7 @@
 
 #include <inttypes.h>
 #include <stdio.h>
+#include <stdint.h>
 
 int main() {
   printf( "    short int: %zd\n" , sizeof(short int) ) ;
@@ -11,7 +12,8 @@ int main() {
   printf( "     long int: %zd\n", sizeof(long int) ) ;
   printf( "long long int: %zd\n", sizeof(long long int) ) ;
   printf( "       size_t: %zd\n", sizeof(size_t) ) ;
-  printf( "        void*: %zd\n\n", sizeof(void *) ) ;
+  printf( "        void*: %zd\n", sizeof(void *) ) ;
+  printf( "     intptr_t: %zd\n\n", sizeof(intptr_t) ) ;
 
 
   printf( "PRIu32 usage (see source): %"PRIu32"\n" , (uint32_t) 42 ) ;

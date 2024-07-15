@@ -1,6 +1,7 @@
 /* KERNEL, 7/7/87 -- S. Hekmatpour
  * header definitions and macros:
  */
+#include <stdint.h>
 #include <stdio.h>
 #define UNIX		1
 #define SIGNAL		1
@@ -136,8 +137,8 @@ typedef struct channel *iochan;		/* I/O channel */
 #define CELLvec			part.vect.vec
 
 #define CONVbyte(p)		((byte) (p))
-#define CONVint(p)		((int) (p))
-#define CONVintp(p)		((int *) (p))
+#define CONVint(p)		((intptr_t) (p))
+#define CONVintp(p)		((intptr_t *) (p))
 #define CONVreal(p)		((real) (p))
 #define CONVstr(p)		((char *) (p))
 #define CONVchan(p)		((iochan) (p))
