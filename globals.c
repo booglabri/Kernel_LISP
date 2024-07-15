@@ -2,6 +2,7 @@
  * global variable definitions:
  */
 #include "kernel.h"
+#include <stdint.h>
 
 char *err_args    = "incorrect number of arguments";
 char *err_pars    = "bad parameter(s)";
@@ -33,11 +34,11 @@ char     strbuf[STRBUFSIZE+2];          /* string buffer */
 struct   variable varstk[VARSTKSIZE+1]; /* variable stack */
 kerncell evalstk[EVALSTKSIZE+1];        /* evaluation stack (also cell stack) */
 kerncell argstk[ARGSTKSIZE+1];          /* argument stack */
-int evaltop = -1;               /* top of evaluation stack */
-int celltop = EVALSTKSIZE;      /* top of cell stack */
-int vartop  = -1;               /* top of variable stack */
-int argtop  = -1;               /* top of argument stack */
-int _argtop = -1;               /* argtop for the last vlam */
+intptr_t evaltop = -1;               /* top of evaluation stack */
+intptr_t celltop = EVALSTKSIZE;      /* top of cell stack */
+intptr_t vartop  = -1;               /* top of variable stack */
+intptr_t argtop  = -1;               /* top of argument stack */
+intptr_t _argtop = -1;               /* argtop for the last vlam */
 void (* org_interrupt)();       /* original interrupt handler */
 
 kernsym /* internals: */

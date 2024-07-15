@@ -2,6 +2,7 @@
  * evaluation functions:
  */
 #include "kernel.h"
+#include <stdint.h>
 
 kerncell
 eval (expr)  /* --------------------------------------------- evaluate expr */
@@ -13,7 +14,7 @@ kerncell expr;
            error(evalsym,"unbound symbol",EVALpush(expr));
         }
         else if (ISlist(expr))
-        {  int      save_celltop = celltop;       /* save top of cell stack */
+        {  intptr_t save_celltop = celltop;       /* save top of cell stack */
            kerncell save = evalcall(expr->CELLcar,EVALpush(expr),0);
            EVALpop();
            celltop = save_celltop;             /* restore top of cell stack */
@@ -38,7 +39,7 @@ int stacked;                      /* non-zero when args are already stacked */
 {
    kerncell fox;
    kerncell (* fun) ();
-   int      arg1;
+   intptr_t arg1;
 
      start:
         if (ISlist(head)) {                        /* ((...) arg1 ... argn) */
@@ -112,7 +113,8 @@ evallam (lam,args,stacked) /* ------------------ evaluate a lam application */
 register kerncell lam, args;
 int stacked;                      /* non-zero when args are already stacked */
 {
-   int      arg1, nvars;
+   intptr_t arg1;
+   int      nvars;
    kerncell obj, vars;
    register kerncell vs;
 
@@ -152,9 +154,9 @@ evalvlam (vlam,args,stacked)  /* -------------- evaluate a vlam application */
 register kerncell vlam, args;
 int stacked;                      /* non-zero when args are already stacked */
 {
-   int arg1;
+   intptr_t arg1;
    kerncell obj, vars;
-   int save_argtop = _argtop;                      /* for nested vlam calls */
+   intptr_t save_argtop = _argtop;                      /* for nested vlam calls */
 
         vlam = vlam->CELLcdr;                             /* drop vlam head */
         if (!ISlist(vars = vlam->CELLcar) || checkvars(vars) != 1)

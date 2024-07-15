@@ -136,6 +136,10 @@ typedef struct channel *iochan;		/* I/O channel */
 #define CELLdim			part.vect.dim
 #define CELLvec			part.vect.vec
 
+#define CONVintvoid(p)          ((p), 0)
+#define CONVstrvoidp(p)         ((p), (char*)NULL)
+#define CONVchanvoidp(p)        ((p), (iochan)NULL)
+#define CONVcellvoidp(p)        ((p), (kerncell)NULL)
 #define CONVbyte(p)		((byte) (p))
 #define CONVint(p)		((intptr_t) (p))
 #define CONVintp(p)		((intptr_t *) (p))
@@ -173,11 +177,11 @@ typedef struct channel *iochan;		/* I/O channel */
 
 #define EVALpush(obj)						\
 	(++evaltop < celltop ? evalstk[evaltop] = (obj)		\
-			     : CONVcell(faterr(err_evalstk)))
+			     : CONVcellvoidp(faterr(err_evalstk)))
 #define EVALpop()		--evaltop
 #define CELLpush(obj)						\
 	(--celltop > evaltop ? evalstk[celltop] = (obj)		\
-			     : CONVcell(faterr(err_evalstk)))
+			     : CONVcellvoidp(faterr(err_evalstk)))
 #define CELLpop()		++celltop
 #define VARpush(s,f,b)			\
 	if (++vartop < VARSTKSIZE) {	\
@@ -201,19 +205,19 @@ typedef struct channel *iochan;		/* I/O channel */
 #define ARGnum4			argstk[ARGidx1 + 3]
 
 #define GETint(yyy,xxx)					\
-	(ISint(xxx) ? xxx->CELLinum : CONVint(error(yyy,err_int,xxx)))
+	(ISint(xxx) ? xxx->CELLinum : CONVintvoid(error(yyy,err_int,xxx)))
 #define GETreal(yyy,xxx)				\
-	(ISreal(xxx) ? xxx->CELLrnum : CONVint(error(yyy,err_real,xxx)))
+	(ISreal(xxx) ? xxx->CELLrnum : CONVintvoid(error(yyy,err_real,xxx)))
 #define GETnum(yyy,xxx)					\
 	(ISint(xxx) ? xxx->CELLinum			\
 		    : (ISreal(xxx) ? xxx->CELLrnum	\
-				   : CONVint(error(yyy,err_num,xxx))))
+				   : CONVintvoid(error(yyy,err_num,xxx))))
 #define GETstr(yyy,xxx)					\
 	(ISstr(xxx) ? xxx->CELLstr			\
 		    : (ISsym(xxx) ? CONVsym(xxx)->name  \
-				  : CONVstr(error(yyy,err_str,xxx))))
+				  : CONVstrvoidp(error(yyy,err_str,xxx))))
 #define GETchan(yyy,xxx)				\
-	(ISchan(xxx) ? xxx->CELLchan : CONVchan(error(yyy,err_chan1,xxx)))
+	(ISchan(xxx) ? xxx->CELLchan : CONVchanvoidp(error(yyy,err_chan1,xxx)))
 #define CHECKsym1(yyy,xxx)				\
 	if (xxx->flag >= VOID) error(yyy,err_sym1,xxx)
 #define CHECKsym2(yyy,xxx)				\
@@ -237,7 +241,7 @@ extern iochan	_inchan, _outchan, _errchan;
 extern char	strbuf[];
 extern struct	variable varstk[];
 extern kerncell evalstk[], argstk[];
-extern int	evaltop, celltop, vartop, argtop, _argtop;
+extern intptr_t	evaltop, celltop, vartop, argtop, _argtop;
 extern kerncell read_and_eval, top_lev_call, top_lev_tags;
 extern void	(* org_interrupt)();	      /* original interrupt handler */
 
@@ -344,8 +348,8 @@ extern kernsym  catchsym, throwsym, caperrsym, errorsym, toplevelsym,
 extern kerncell catch(), throw(), caperr(),
 		Ucatch(), Vthrow(), Ucaperr(), Verror(), Ltoplevel(),
 		Lreset(), Vexit();
-extern int error(void *, char *, void *);
-extern int faterr(char *);
+extern void error(void *, char *, void *);
+extern void faterr(char *);
 extern void errlevel();
 extern void cleanup();
 extern void topexec();

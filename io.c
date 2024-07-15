@@ -2,6 +2,7 @@
  * I/O routines:
  */
 #include "kernel.h"
+#include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
@@ -248,7 +249,7 @@ readaux (chan,bq)  /* ---------------------- read an s-expression from chan */
 iochan chan;
 int    bq;                   /* non-zero when in a back-quoted s-expression */
 {
-   int      save_celltop = celltop;               /* save top of cell stack */
+   intptr_t save_celltop = celltop;               /* save top of cell stack */
    kerncell obj;
 
         if (chan == _inchan && _outchan->len > 0) {
@@ -718,7 +719,7 @@ Vpp ()  /* --------------------------------------------- (pp 'expr ['chan]) */
            (argtop - ARGidx1 == 1
             ? _outchan
             : (!ISchan(arg2 = ARGnum2) || arg2->CELLchan->mode == INCHAN
-               ? CONVchan(error(ppsym,err_chan2,arg2))
+               ? CONVchanvoidp(error(ppsym,err_chan2,arg2))
                : arg2->CELLchan)),
            0,0);
         return(TTT);

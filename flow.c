@@ -4,6 +4,7 @@
  * error handling functions, and the top level functions.
  */
 #include "kernel.h"
+#include <stdint.h>
 #include <stdlib.h>
 #include <setjmp.h>
 
@@ -19,11 +20,11 @@
 
 struct catframe {       /* catch frame */
         jmp_buf jmp;            /* for setjmp and longjmp */
-        int     evaltop;        /* evaltop at the time of setjmp */
-        int     celltop;        /* celltop at the time of setjmp */
-        int     vartop;         /* vartop at the time of setjmp */
-        int     argtop;         /* argtop at the time of setjmp */
-        int     _argtop;        /* argtop of the last vlam */
+        intptr_t evaltop;        /* evaltop at the time of setjmp */
+        intptr_t celltop;        /* celltop at the time of setjmp */
+        intptr_t vartop;         /* vartop at the time of setjmp */
+        intptr_t argtop;         /* argtop at the time of setjmp */
+        intptr_t _argtop;        /* argtop of the last vlam */
 };
 struct catframe catstk[CATSTKSIZE];   /* the catch stack */
 int cattop = -1;                /* top of jump stack */
@@ -147,7 +148,7 @@ Verror ()  /* --------------------------- (error 'source 'message ['extra]) */
         return(TTT);
 } /* Verror */
 
-int
+void
 error (source,message,extra)  /* ------------------- error handling routine */
 void *source;                 /* pointer to kerncell or kernsym */
 char *message;
@@ -192,7 +193,7 @@ errlevel ()  /* ----------------------------- error level's read-eval-print */
         }
 } /* errlevel */
 
-int
+void
 faterr (message)  /* --------------------------------- fatal error handling */
 char *message;
 {

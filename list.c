@@ -13,7 +13,7 @@ Lcar ()  /* --------------------------------------------------- (car 'list) */
         return(ISlist(arg)
                ? arg->CELLcar
                : (arg == NIL ? NIL
-                             : CONVcell(error(carsym,err_list,arg))));
+                             : CONVcellvoidp(error(carsym,err_list,arg))));
 } /* Lcar */
 
 kerncell
@@ -25,7 +25,7 @@ Lcdr ()  /* --------------------------------------------------- (cdr 'list) */
         return(ISlist(arg)
                ? arg->CELLcdr
                : (arg == NIL ? NIL
-                             : CONVcell(error(cdrsym,err_list,arg))));
+                             : CONVcellvoidp(error(cdrsym,err_list,arg))));
 } /* Lcdr */
 
 kerncell

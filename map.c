@@ -2,13 +2,14 @@
  * map functions:
  */
 #include "kernel.h"
+#include <stdint.h>
 
 kerncell
 Vmapa ()  /* -------------------------------- (mapa 'fun 'list1 ... 'listn) */
 {
    kerncell fun = ARGnum1;
    int      arg1 = ARGidx1 + 1;
-   int      argn = argtop;
+   intptr_t argn = argtop;
    register int i;
    kerncell res = argstk[arg1];
 
@@ -37,7 +38,7 @@ Vmapcar ()  /* ---------------------------- (mapcar 'fun 'list1 ... 'listn) */
    kerncell fun = ARGnum1;
    kerncell res = NIL;
    int      arg1 = ARGidx1 + 1;
-   int      argn = argtop;
+   intptr_t argn = argtop;
    register int i;
 
         CHECKvargs1(mapcarsym,2);               /* at least 2 args required */
@@ -64,7 +65,7 @@ Vmapd ()  /* -------------------------------- (mapd 'fun 'list1 ... 'listn) */
 {
    kerncell fun = ARGnum1;
    int      arg1 = ARGidx1 + 1;
-   int      argn = argtop;
+   intptr_t argn = argtop;
    register int i;
    kerncell res = argstk[arg1];
 
@@ -93,7 +94,7 @@ Vmapcdr ()  /* ---------------------------- (mapcdr 'fun 'list1 ... 'listn) */
    kerncell fun = ARGnum1;
    kerncell res = NIL;
    int      arg1 = ARGidx1 + 1;
-   int      argn = argtop;
+   intptr_t argn = argtop;
    register int i;
 
         CHECKvargs1(mapcdrsym,2);               /* at least 2 args required */
