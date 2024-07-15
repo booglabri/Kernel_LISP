@@ -8,5 +8,6 @@
 (load 'lisp/graph.k 1)
 (load 'lisp/increment.k 1)
 (load 'lisp/mean.k 1)
+(load 'lisp/hanoi.k 1)
 
 eof
