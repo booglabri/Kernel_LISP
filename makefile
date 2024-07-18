@@ -22,6 +22,10 @@ ifeq ($(PROFILE), t)
 	CFLAGS	+= -pg
 	STRIP	:= echo
 endif
+ifeq ($(RTL), t)
+	CFLAGS  += -fdump-rtl-expand
+	STRIP   := echo
+endif
 ifeq ($(TARGET), armhf)
 	CC    	:= arm-linux-gnueabihf-gcc
 	QEMU    := qemu-arm -L /usr/arm-linux-gnueabihf
@@ -49,7 +53,7 @@ libkern.a: $(OBJS)
 	$(QEMU) ./kcomp $< $@.c
 	$(CC) $(CFLAGS) $@.c -o $@ $(LDFLAGS)
 
-.PHONY: run clean cleanlips chksizes showobjs
+.PHONY: run clean cleanlisp cleanexpand chksizes showobjs callgraph
 
 run:
 	$(QEMU) ./kern
@@ -60,6 +64,9 @@ clean:
 cleanlisp:
 	$(RM) lisp/*.c `find lisp -type f -executable -print`
 
+cleanexpand:
+	$(RM) *.expand
+
 chksizes: chksizes.c
 	$(RM) $@
 	$(CC) -o $@ $?
@@ -68,3 +75,5 @@ chksizes: chksizes.c
 showobjs: $(OBJS)
 	@echo $(OBJS) | tr " " "\n"
 
+callgraph:
+	find . -name "*.expand" | xargs cally --caller $(TOP) --exclude "_mcount" | dot -Grankdir=LR -Tpdf -o callgraph_$(TOP).pdf
