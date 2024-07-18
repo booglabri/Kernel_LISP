@@ -76,4 +76,4 @@ showobjs: $(OBJS)
 	@echo $(OBJS) | tr " " "\n"
 
 callgraph:
-	find . -name "*.expand" | xargs cally --caller $(TOP) --exclude "_mcount" | dot -Grankdir=LR -Tpdf -o callgraph_$(TOP).pdf
+	find . -name "*.expand" | xargs cally --caller $(TOP) --exclude "_mcount" | dot -Grankdir=LR -Tpdf -o callgraph/callgraph_$(TOP).pdf
