@@ -4,8 +4,8 @@
   x)
 
 (fun g ()
-  (setq x 20)
-  (f))
+  (let [(x 20)]
+  (f)))
 
 (cond [(= (g) 10) (print "lexical")]
       [(= (g) 20) (print "dynamic")])

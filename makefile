@@ -49,7 +49,7 @@ libkern.a: $(OBJS)
 %.o: %.c kernel.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-%: %.k kernel.h libkern.a
+%: %.k kernel.h libkern.a kcomp
 	$(QEMU) ./kcomp $< $@.c
 	$(CC) $(CFLAGS) $@.c -o $@ $(LDFLAGS)
 
@@ -76,4 +76,5 @@ showobjs: $(OBJS)
 	@echo $(OBJS) | tr " " "\n"
 
 callgraph:
+	find . -name "*.expand" | xargs cally --callee $(TOP) --exclude "_mcount" | dot -Grankdir=LR -Tpdf -o callgraph/callgraph_$(TOP)_callee.pdf
 	find . -name "*.expand" | xargs cally --caller $(TOP) --exclude "_mcount" | dot -Grankdir=LR -Tpdf -o callgraph/callgraph_$(TOP).pdf
