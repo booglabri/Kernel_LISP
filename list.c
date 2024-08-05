@@ -143,7 +143,7 @@ Lcons ()  /* ------------------------------------------- (cons 'expr 'list) */
    kerncell newcell;
 
         CHECKlargs(conssym,2);
-        CHECKlist(conssym,arg2);
+        /*CHECKlist(conssym,arg2);*/ /* removed argument check to allow (cons 'expr 'expr) to create a dotted pair */
         newcell = freshcell();
         newcell->flag = LISTOBJ;
         newcell->CELLcar = ARGnum1;

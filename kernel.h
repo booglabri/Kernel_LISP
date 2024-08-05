@@ -225,7 +225,7 @@ typedef struct channel *iochan;		/* I/O channel */
 #define CHECKpair(yyy,xxx)				\
 	if (xxx->flag < LISTOBJ) error(yyy,err_pair,xxx)
 #define CHECKlist(yyy,xxx)				\
-	if (xxx->flag < LISTOBJ) error(yyy,err_list,xxx)
+	if (xxx->flag < LISTOBJ && xxx != NIL) error(yyy,err_list,xxx)
 
 /* --------------------- external declarations ----------------------- */
 extern char	*err_args, *err_pars,
